@@ -45,8 +45,8 @@ def lookup(tag, map):
 
 def transform(seq, map):
     newSeq = []
-    for tags in seq:
-        newSeq.append([lookup(tag, map) for tag in tags])
+    for tag in seq:
+        newSeq.append(lookup(tag, map))
     return newSeq
 
 #input: [[entry]], [index]
