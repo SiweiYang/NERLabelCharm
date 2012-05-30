@@ -16,29 +16,174 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QTextEdit" name="textEdit"/>
+     <widget class="QTableView" name="sentenceList">
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>320</number>
+      </attribute>
+      <attribute name="horizontalHeaderMinimumSectionSize">
+       <number>100</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+     </widget>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QTextBrowser" name="MaluubaNER"/>
+       <widget class="QTableView" name="sentenceCorrectionView">
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>80</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+       </widget>
       </item>
       <item>
-       <widget class="QTextBrowser" name="CloudFlowerNER"/>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <layout class="QHBoxLayout" name="ControlSet">
+          <item>
+           <widget class="QLabel" name="sentenceIndexLabel">
+            <property name="text">
+             <string>Sentence Index: </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="sentenceIndex">
+            <property name="text">
+             <string>N/A</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="startButton">
+            <property name="text">
+             <string>Start</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="saveButton">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="TestResult">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Test Result:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="testResultPath">
+            <property name="text">
+             <string>/home/maluuba/workspace/NLPUtil/python/calendar/trainedStuff/test_result</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="browseResultPath">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="TrainingSet">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Train Set     :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="trainingSetPath"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="browseTrainingSetPath">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="CorrectSet">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Correct Set:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="correctSetPath"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="browseCorrectSetPath">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="WrongSet">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Wrong Set :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="wrongSetPath"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="browseWrongSetPath">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="RelabelControl">
+        <item>
+         <widget class="QPushButton" name="goodButton">
           <property name="text">
-           <string>PushButton</string>
+           <string>CF's Good</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="normalize">
+         <widget class="QPushButton" name="correctButton">
           <property name="text">
-           <string>Normalize</string>
+           <string>Correct It with CRF</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="badButton">
+          <property name="text">
+           <string>Can't Handle It</string>
           </property>
          </widget>
         </item>
@@ -54,7 +199,7 @@
      <x>0</x>
      <y>0</y>
      <width>954</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

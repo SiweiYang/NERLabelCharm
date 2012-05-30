@@ -1,18 +1,50 @@
 #!/usr/bin/env python
-from packPrinter import printPack
+from packPrinter import printPack, pack, TaggedSentence
+
 __author__ = 'syang'
 def loadData(fileName):
     entries = []
 
-    file = open(fileName, 'r')
-    while True:
-        line = file.readline()
-        if line == '':
-            break
+    try:
+        file = open(fileName, 'r')
+        while True:
+            line = file.readline()
+            if line == '':
+                break
 
-        line = line.strip()
-        cols = line.split()
-        entries.append(cols)
+            line = line.strip()
+            cols = line.split()
+            entries.append(cols)
+        file.close()
+    except IOError:
+        pass
+
+    return entries
+
+def saveData(fileName, entries):
+    try:
+        file = open(fileName, 'w')
+        lines = [('%s\t%s\t%s' % (entry[0], entry[-2], entry[-1])).strip() for entry in entries]
+        lines = ['%s\n' % line for line in lines]
+        #print lines
+        file.writelines(lines)
+        file.close()
+    except IOError:
+        pass
+
+    return entries
+
+def saveTrainingData(fileName, entries):
+    try:
+        file = open(fileName, 'w')
+        lines = [('%s\t%s' % (entry[0], entry[-2])).strip() for entry in entries]
+        lines = ['%s\n' % line for line in lines]
+        #print lines
+        file.writelines(lines)
+        file.close()
+    except IOError:
+        pass
+
     return entries
 
 #return: (tag)
@@ -66,7 +98,7 @@ def selectCols(seq, selectedCols):
 
     return newSeq
 
-#return [[cols]]
+#return [TaggedSentence]
 def splitSentences(entries):
     sentence = []
     sentences = []
@@ -75,52 +107,31 @@ def splitSentences(entries):
             if sentence == []:
                 pass
             else:
-                sentences.append(sentence)
+                sentences.append(TaggedSentence(sentence))
                 sentence = []
             continue
         sentence.append(cols)
 
     return sentences
 
+def concatenateSentences(sentences):
+    entries = []
+    for sentence in sentences:
+        for token in sentence.getTokens():
+            entries.append(token)
+        entries.append(('', '', ''))
 
-#expect [[word, tag]]
-def pack(sentence):
-    packedSentence = []
-    lastTag = ''
-    for word, tag in sentence:
-        if samePack(lastTag, tag):
-            wordTag, wordPack = packedSentence[-1]
-            wordPack.append(word)
-        else:
-            packedSentence.append((tag, [word]))
-        lastTag = tag
-
-    return packedSentence
-
-def samePack(tagA, tagB):
-    if tagA == 'O' and tagB == 'O':
-        return True
-    if ( tagA.startswith('B-') or tagA.startswith('I-') ) and tagB.startswith('I-'):
-        return tagA[2:] == tagB[2:]
-
-    return False
+    return entries
 
 if __name__ == '__main__':
-    map = {}
-    i = 0
-    for tag in scanner('siwei.music.label'):
-        map[tag] = i
-        i += 1
-    print(map)
+    entries = loadData('siwei.music.label')
+    #myEntries = selectCols(entries, [0, 1])
+    #cfEntries = selectCols(entries, [0, 2])
 
-    entries = transform('siwei.label.done', map)
-    myEntries = selectCols(entries, [0, 1])
-    cfEntries = selectCols(entries, [0, 2])
+    mySentences = splitSentences(entries)
 
-    mySentences = splitSentences(myEntries)
-    cfSentences = splitSentences(cfEntries)
-
-    packedMySentences = [pack(sentence) for sentence in mySentences]
-    print len(packedMySentences)
+    print(mySentences)
+    #packedMySentences = [pack(sentence) for sentence in mySentences]
+    #print len(packedMySentences)
 
     #printPack(packedMySentences[100])
